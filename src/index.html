@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Adjusted Weaning Weight Calculator</title>
+  <link rel="stylesheet" href="/build/agc-adjusted-weaning-weight.css" type="text/css" />
+  <script src="/build/agc-adjusted-weaning-weight.js"></script>
+</head>
+<body>
+
+    <agc-adjusted-weaning-weight socket="example" mode="full">
+      <div slot="results">
+        <agc-adjusted-weaning-weight-results socket="example">
+          <div slot="empty">
+            <agc-adjusted-weaning-weight-results-placeholder></agc-adjusted-weaning-weight-results-placeholder>
+          </div>
+        </agc-adjusted-weaning-weight-results>
+      </div>
+    </agc-adjusted-weaning-weight>
+
+    <script>
+      var el = document.querySelector('agc-adjusted-weaning-weight')
+      el.units = { weight: 'lbs' }
+    </script>
+</body>
+</html>
