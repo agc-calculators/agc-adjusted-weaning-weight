@@ -1,5 +1,137 @@
 /*!
  * Built with http://stenciljs.com
- * 2018-12-28T14:35:33
+ * 2018-12-28T14:58:40
  */
-!function(e,t,n,r,s,i,a,c,o,d,u,g,l,h){for(u=e[n]=e[n]||{},(g=t.createElement("style")).innerHTML=o+"{visibility:hidden}.hydrated{visibility:inherit}",g.setAttribute("data-styles",""),l=t.head.querySelector("meta[charset]"),t.head.insertBefore(g,l?l.nextSibling:t.head.firstChild),function(e,t,n){(e["s-apps"]=e["s-apps"]||[]).push("AgcAdjustedWeaningWeight"),n.componentOnReady||(n.componentOnReady=function(){var t=this;function n(n){if(t.nodeName.indexOf("-")>0){for(var r=e["s-apps"],s=0,i=0;i<r.length;i++)if(e[r[i]].componentOnReady){if(e[r[i]].componentOnReady(t,n))return;s++}if(s<r.length)return void(e["s-cr"]=e["s-cr"]||[]).push([t,n])}n(null)}return e.Promise?new e.Promise(n):{then:n}})}(e,0,d),s=s||u.resourcesUrl,g=(l=t.querySelectorAll("script")).length-1;g>=0&&!(h=l[g]).src&&!h.hasAttribute("data-resources-url");g--);l=h.getAttribute("data-resources-url"),!s&&l&&(s=l),!s&&h.src&&(s=(l=h.src.split("/").slice(0,-1)).join("/")+(l.length?"/":"")+"agc-adjusted-weaning-weight/"),g=t.createElement("script"),function(e,t,n,r){return!(t.search.indexOf("core=esm")>0)&&(!(!(t.search.indexOf("core=es5")>0||"file:"===t.protocol)&&e.customElements&&e.customElements.define&&e.fetch&&e.CSS&&e.CSS.supports&&e.CSS.supports("color","var(--c)")&&"noModule"in n)||function(e){try{return new Function('import("")'),!1}catch(e){}return!0}())}(e,e.location,g)?g.src=s+"agc-adjusted-weaning-weight.qnhsyrlk.js":(g.src=s+"agc-adjusted-weaning-weight.fzebrxsg.js",g.setAttribute("type","module"),g.setAttribute("crossorigin",!0)),g.setAttribute("data-resources-url",s),g.setAttribute("data-namespace","agc-adjusted-weaning-weight"),t.head.appendChild(g)}(window,document,"AgcAdjustedWeaningWeight",0,0,0,0,0,"agc-adjusted-weaning-weight,agc-adjusted-weaning-weight-progress,agc-adjusted-weaning-weight-results,agc-adjusted-weaning-weight-results-placeholder",HTMLElement.prototype);
+(function(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCoreSsr, appCorePolyfilled, hydratedCssClass, components) {
+
+  function init(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCorePolyfilled, hydratedCssClass, cmpTags, HTMLElementPrototype, App, x, y, scriptElm) {
+    // create global namespace if it doesn't already exist
+    App = win[namespace] = win[namespace] || {};
+    if (cmpTags) {
+        // auto hide components until they been fully hydrated
+        // reusing the "x" and "i" variables from the args for funzies
+        x = doc.createElement('style');
+        x.innerHTML = cmpTags + '{visibility:hidden}.' + hydratedCssClass + '{visibility:inherit}';
+        x.setAttribute('data-styles', '');
+        y = doc.head.querySelector('meta[charset]');
+        doc.head.insertBefore(x, y ? y.nextSibling : doc.head.firstChild);
+    }
+    createComponentOnReadyPrototype(win, namespace, HTMLElementPrototype);
+    resourcesUrl = resourcesUrl || App.resourcesUrl;
+    // figure out the script element for this current script
+    y = doc.querySelectorAll('script');
+    for (x = y.length - 1; x >= 0; x--) {
+        scriptElm = y[x];
+        if (scriptElm.src || scriptElm.hasAttribute('data-resources-url')) {
+            break;
+        }
+    }
+    // get the resource path attribute on this script element
+    y = scriptElm.getAttribute('data-resources-url');
+    if (!resourcesUrl && y) {
+        // the script element has a data-resources-url attribute, always use that
+        resourcesUrl = y;
+    }
+    if (!resourcesUrl && scriptElm.src) {
+        // we don't have an exact resourcesUrl, so let's
+        // figure it out relative to this script's src and app's filesystem namespace
+        y = scriptElm.src.split('/').slice(0, -1);
+        resourcesUrl = (y.join('/')) + (y.length ? '/' : '') + fsNamespace + '/';
+    }
+    // request the core this browser needs
+    // test for native support of custom elements and fetch
+    // if either of those are not supported, then use the core w/ polyfills
+    // also check if the page was build with ssr or not
+    x = doc.createElement('script');
+    if (usePolyfills(win, win.location, x, 'import("")')) {
+        // requires the es5/polyfilled core
+        x.src = resourcesUrl + appCorePolyfilled;
+    }
+    else {
+        // let's do this!
+        x.src = resourcesUrl + appCore;
+        x.setAttribute('type', 'module');
+        x.setAttribute('crossorigin', true);
+    }
+    x.setAttribute('data-resources-url', resourcesUrl);
+    x.setAttribute('data-namespace', fsNamespace);
+    doc.head.appendChild(x);
+}
+function usePolyfills(win, location, scriptElm, dynamicImportTest) {
+    // fyi, dev mode has verbose if/return statements
+    // but it minifies to a nice 'lil one-liner ;)
+    if (location.search.indexOf('core=esm') > 0) {
+        // force esm build
+        return false;
+    }
+    if ((location.search.indexOf('core=es5') > 0) ||
+        (location.protocol === 'file:') ||
+        (!(win.customElements && win.customElements.define)) ||
+        (!win.fetch) ||
+        (!(win.CSS && win.CSS.supports && win.CSS.supports('color', 'var(--c)'))) ||
+        (!('noModule' in scriptElm))) {
+        // es5 build w/ polyfills
+        return true;
+    }
+    // final test to see if this browser support dynamic imports
+    return doesNotSupportsDynamicImports(dynamicImportTest);
+}
+function doesNotSupportsDynamicImports(dynamicImportTest) {
+    try {
+        new Function(dynamicImportTest);
+        return false;
+    }
+    catch (e) { }
+    return true;
+}
+function createComponentOnReadyPrototype(win, namespace, HTMLElementPrototype) {
+    (win['s-apps'] = win['s-apps'] || []).push(namespace);
+    if (!HTMLElementPrototype.componentOnReady) {
+        HTMLElementPrototype.componentOnReady = function componentOnReady() {
+            /*tslint:disable*/
+            var elm = this;
+            function executor(resolve) {
+                if (elm.nodeName.indexOf('-') > 0) {
+                    // window hasn't loaded yet and there's a
+                    // good chance this is a custom element
+                    var apps = win['s-apps'];
+                    var appsReady = 0;
+                    // loop through all the app namespaces
+                    for (var i = 0; i < apps.length; i++) {
+                        // see if this app has "componentOnReady" setup
+                        if (win[apps[i]].componentOnReady) {
+                            // this app's core has loaded call its "componentOnReady"
+                            if (win[apps[i]].componentOnReady(elm, resolve)) {
+                                // this component does belong to this app and would
+                                // have fired off the resolve fn
+                                // let's stop here, we're good
+                                return;
+                            }
+                            appsReady++;
+                        }
+                    }
+                    if (appsReady < apps.length) {
+                        // not all apps are ready yet
+                        // add it to the queue to be figured out when they are
+                        (win['s-cr'] = win['s-cr'] || []).push([elm, resolve]);
+                        return;
+                    }
+                }
+                // not a recognized app component
+                resolve(null);
+            }
+            // callback wasn't provided, let's return a promise
+            if (win.Promise) {
+                // use native/polyfilled promise
+                return new win.Promise(executor);
+            }
+            // promise may not have been polyfilled yet
+            return { then: executor };
+        };
+    }
+}
+
+
+  init(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCoreSsr, appCorePolyfilled, hydratedCssClass, components);
+
+  })(window, document, "AgcAdjustedWeaningWeight","agc-adjusted-weaning-weight",0,"agc-adjusted-weaning-weight.core.js","es5-build-disabled.js","hydrated","agc-adjusted-weaning-weight,agc-adjusted-weaning-weight-progress,agc-adjusted-weaning-weight-results,agc-adjusted-weaning-weight-results-placeholder",HTMLElement.prototype);

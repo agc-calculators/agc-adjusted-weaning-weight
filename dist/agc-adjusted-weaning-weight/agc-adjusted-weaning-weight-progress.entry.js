@@ -1,5 +1,5 @@
 /*! Built with http://stenciljs.com */
-import { h } from '../agc-adjusted-weaning-weight.core.js';
+const { h } = window.AgcAdjustedWeaningWeight;
 
 class AgcAdjustedWeaningWeightProgress {
     constructor() {
@@ -9,9 +9,12 @@ class AgcAdjustedWeaningWeightProgress {
     render() {
         return (h("div", { ref: c => this.progress = c, class: "wizard__progress" },
             h("span", { class: `step${this.currentStep > 0 ? ' finish' : ''}${this.currentStep === 0 ? ' active' : ''}` }),
-            h("span", { class: `step${this.currentStep > 1 ? ' finish' : ''}${this.currentStep === 1 ? ' active' : ''}` })));
+            h("span", { class: `step${this.currentStep > 1 ? ' finish' : ''}${this.currentStep === 1 ? ' active' : ''}` }),
+            h("span", { class: `step${this.currentStep > 2 ? ' finish' : ''}${this.currentStep === 1 ? ' active' : ''}` }),
+            h("span", { class: `step${this.currentStep > 3 ? ' finish' : ''}${this.currentStep === 1 ? ' active' : ''}` })));
     }
     componentDidLoad() {
+        // Global events allow the control to be separated from the form...
         window.document.addEventListener('agcStepChanged', this.agcStepChangedHandler.bind(this));
         window.document.addEventListener('agcCalculated', this.agcCalculatedHandler.bind(this));
     }

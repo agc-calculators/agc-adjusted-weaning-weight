@@ -1,5 +1,5 @@
 /*! Built with http://stenciljs.com */
-import { h } from '../agc-adjusted-weaning-weight.core.js';
+const { h } = window.AgcAdjustedWeaningWeight;
 
 class AgcAdjustedWeaningWeightResultsPlaceholder {
     render() {

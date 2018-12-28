@@ -18,6 +18,7 @@ export class AgcAdjustedWeaningWeightResults {
                     h("sub", null, this.data['units']['weight'])))))));
     }
     handleResults(e) {
+        console.log('handle results', e.detail);
         if (e.detail['socket'] !== this.socket) {
             return;
         }
@@ -25,9 +26,7 @@ export class AgcAdjustedWeaningWeightResults {
         this.ready = true;
     }
     componentDidLoad() {
-        if (!this.socket) {
-            return;
-        }
+        // Global events allow the control to be separated from the form...        
         window.document.addEventListener('agcCalculated', this.handleResults.bind(this));
     }
     componentDidUnload() {

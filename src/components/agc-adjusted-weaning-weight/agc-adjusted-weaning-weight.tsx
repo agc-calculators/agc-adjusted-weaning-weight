@@ -34,11 +34,11 @@ export class AgcAdjustedWeaningWeight {
                     <section data-wizard-section="1">
                         <div class="agc-wizard__field">
                             <label data-i18n="fields.gender">Gender</label>
-                            <div class="agc-wizard__radio-group">
-                                <input id="maleGender" name="gender" type="radio" value="male" /> <span data-i18n="options.gender.male">Male</span>
-                                <input id="femaleGender" name="gender" type="radio" value="male" /> <span data-i18n="options.gender.female">Female</span>
-                            </div>
-                            <p data-i18n="hints.gender">⮤ Select the gender.</p>
+                            <select name="gender">
+                                <option value="male" data-i18n="options.gender.male">Male</option>
+                                <option value="female" data-i18n="options.gender.female">Female</option>
+                            </select>
+                            <p data-i18n="hints.gender">⮤ Select the gender of the calf.</p>
                         </div>                        
                         <div class="agc-wizard__actions">
                             {this.mode === 'step' && <button class="agc-wizard__actions-next" data-i18n="actions.next" onClick={this.nextPrev.bind(this, 1)}>Next 🠖</button>}
@@ -49,7 +49,7 @@ export class AgcAdjustedWeaningWeight {
                             <label data-i18n="fields.birth-weight">Birth Weight</label>
                             <input name="birthWeight" type="number" required min="1" />
                             <p class="agc-wizard__validation-message" data-i18n="validation.birth-weight.required" data-validates="birthWeight">Please enter a valid weight in whole numbers.</p>
-                            <p data-i18n={`hints.birth-weight.${this.units['weight']}`}>⮤ Enter the weight at birth in pounds.</p>
+                            <p data-i18n={`hints.birth-weight.${this.units['weight']}`}>⮤ Enter the weight at birth to the nearest pound.</p>
                         </div>
                         <div class="agc-wizard__actions">
                             {this.mode === 'step' && [
@@ -62,7 +62,7 @@ export class AgcAdjustedWeaningWeight {
                             <label data-i18n="fields.current-weight">Current Weight</label>
                             <input name="currentWeight" type="number" required min="1" />
                             <p class="agc-wizard__validation-message" data-i18n="validation.current-weight.required" data-validates="currentWeight">Please enter a valid weight in whole numbers.</p>
-                            <p data-i18n={`hints.current-weight.${this.units['weight']}`}>⮤ Enter the current weight in pounds.</p>
+                            <p data-i18n={`hints.current-weight.${this.units['weight']}`}>⮤ Enter the current weight to the nearest pound.</p>
                         </div>
                         <div class="agc-wizard__actions">
                             {this.mode === 'step' && [
@@ -75,7 +75,7 @@ export class AgcAdjustedWeaningWeight {
                             <label data-i18n="fields.current-age">Current Age</label>
                             <input name="currentAge" type="number" required min="1" />
                             <p class="agc-wizard__validation-message" data-i18n="validation.current-age.required" data-validates="currentAge">Please enter a valid weight in whole numbers.</p>
-                            <p data-i18n={`hints.current-age.${this.units['weight']}`}>⮤ Enter the current age in days.</p>
+                            <p data-i18n={`hints.current-age.${this.units['weight']}`}>⮤ Enter the age in days when the current weight was taken.</p>
                         </div>
                         <div class="agc-wizard__actions">
                             {this.mode === 'step' && [
@@ -93,11 +93,11 @@ export class AgcAdjustedWeaningWeight {
                                 <option value="5" data-i18n="options.age-of-dam.5">5 - 10 years old</option>
                                 <option value="11" data-i18n="options.age-of-dam.11">Over 10 years old</option>
                             </select>
-                            <p data-i18n="hints.age-of-dam">⮤ Select the age of the dam.</p>
+                            <p data-i18n="hints.age-of-dam">⮤ Select the closest age of the dam.</p>
                         </div>
                         <div class="agc-wizard__actions">
                             {this.mode === 'step' && <button class="agc-wizard__actions-back" data-i18n="actions.back" onClick={this.nextPrev.bind(this, -1)}>🠔 Back</button>}
-                            <button class="agc-wizard__actions-next" data-i18n="actions.finish" onClick={this.nextPrev.bind(this, this.mode === 'step' ? 1 : 2)}>Calculate 🠖</button>
+                            <button class="agc-wizard__actions-next" data-i18n="actions.finish" onClick={this.nextPrev.bind(this, this.mode === 'step' ? 1 : 5)}>Calculate 🠖</button>
                         </div>
                     </section>
                     <section data-wizard-results>                        
@@ -179,8 +179,7 @@ export class AgcAdjustedWeaningWeight {
             "11": { "male": 20, "female": 18 }
         }
 
-        let male =  (this.form.querySelector('#maleGender') as HTMLInputElement).checked;
-        let gender = male ? 'male' : 'female';
+        let gender = (this.form.querySelector('[name="gender') as HTMLSelectElement).value;
         let birthWeight =  parseFloat((this.form.querySelector('[name="birthWeight"') as HTMLInputElement).value);     
         let currentWeight =  parseFloat((this.form.querySelector('[name="currentWeight"') as HTMLInputElement).value);     
         let currentAge =  parseInt((this.form.querySelector('[name="currentAge"') as HTMLInputElement).value);   
@@ -204,8 +203,6 @@ export class AgcAdjustedWeaningWeight {
             adjustedWeaningWeight,
             units: this.units
         }
-
-        console.log('results', results);
 
         if (this.socket) {
             this.agcCalculated.emit({socket: this.socket, tract: this.tract, results: {...results}})
@@ -232,7 +229,7 @@ export class AgcAdjustedWeaningWeight {
         window.document.addEventListener('agcAction', this.handleAction.bind(this));
 
         (this.form.querySelector('[name="ageOfDam"]') as HTMLSelectElement).options[3].defaultSelected = true;
-        (this.form.querySelector('#maleGender') as HTMLInputElement).defaultChecked = true;
+        (this.form.querySelector('[name="gender"]') as HTMLSelectElement).options[0].defaultSelected = true;
 
         this.showTab(0)
     }

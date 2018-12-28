@@ -1,4 +1,4 @@
-const oneDay = 24 * 60 * 60 * 1000;
+const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 export const addDays = (dt, days) => {
     if (typeof dt === 'string') {
         dt = new Date(dt);

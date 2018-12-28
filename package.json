@@ -1,6 +1,6 @@
 {
   "name": "@agc-calculators/agc-adjusted-weaning-weight",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",

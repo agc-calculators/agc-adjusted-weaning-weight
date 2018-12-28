@@ -1,1 +1,0 @@
-export * from '../esm/es5/agc-adjusted-weaning-weight.define.js';

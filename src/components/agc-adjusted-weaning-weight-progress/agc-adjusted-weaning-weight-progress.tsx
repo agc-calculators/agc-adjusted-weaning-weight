@@ -14,6 +14,8 @@ export class AgcAdjustedWeaningWeightProgress {
             <div ref={c => this.progress = c as HTMLDivElement} class="wizard__progress">
                 <span class={`step${this.currentStep > 0 ? ' finish': ''}${this.currentStep === 0 ? ' active' : ''}`}></span>
                 <span class={`step${this.currentStep > 1 ? ' finish': ''}${this.currentStep === 1 ? ' active' : ''}`}></span>                
+                <span class={`step${this.currentStep > 2 ? ' finish': ''}${this.currentStep === 1 ? ' active' : ''}`}></span>                
+                <span class={`step${this.currentStep > 3 ? ' finish': ''}${this.currentStep === 1 ? ' active' : ''}`}></span>                
             </div>
         );
     }

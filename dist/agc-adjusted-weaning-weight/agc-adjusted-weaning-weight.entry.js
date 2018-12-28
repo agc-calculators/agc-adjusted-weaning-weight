@@ -1,5 +1,5 @@
 /*! Built with http://stenciljs.com */
-import { h } from '../agc-adjusted-weaning-weight.core.js';
+const { h } = window.AgcAdjustedWeaningWeight;
 
 const validate = (form, name) => {
     let el = form.querySelector(`[name="${name}"]`);
@@ -39,21 +39,17 @@ class AgcAdjustedWeaningWeight {
                 h("section", { "data-wizard-section": "1" },
                     h("div", { class: "agc-wizard__field" },
                         h("label", { "data-i18n": "fields.gender" }, "Gender"),
-                        h("div", { class: "agc-wizard__radio-group" },
-                            h("input", { id: "maleGender", name: "gender", type: "radio", value: "male" }),
-                            " ",
-                            h("span", { "data-i18n": "options.gender.male" }, "Male"),
-                            h("input", { id: "femaleGender", name: "gender", type: "radio", value: "male" }),
-                            " ",
-                            h("span", { "data-i18n": "options.gender.female" }, "Female")),
-                        h("p", { "data-i18n": "hints.gender" }, "\u2BA4 Select the gender.")),
+                        h("select", { name: "gender" },
+                            h("option", { value: "male", "data-i18n": "options.gender.male" }, "Male"),
+                            h("option", { value: "female", "data-i18n": "options.gender.female" }, "Female")),
+                        h("p", { "data-i18n": "hints.gender" }, "\u2BA4 Select the gender of the calf.")),
                     h("div", { class: "agc-wizard__actions" }, this.mode === 'step' && h("button", { class: "agc-wizard__actions-next", "data-i18n": "actions.next", onClick: this.nextPrev.bind(this, 1) }, "Next \uD83E\uDC16"))),
                 h("section", { "data-wizard-section": "2" },
                     h("div", { class: "agc-wizard__field" },
                         h("label", { "data-i18n": "fields.birth-weight" }, "Birth Weight"),
                         h("input", { name: "birthWeight", type: "number", required: true, min: "1" }),
                         h("p", { class: "agc-wizard__validation-message", "data-i18n": "validation.birth-weight.required", "data-validates": "birthWeight" }, "Please enter a valid weight in whole numbers."),
-                        h("p", { "data-i18n": `hints.birth-weight.${this.units['weight']}` }, "\u2BA4 Enter the weight at birth in pounds.")),
+                        h("p", { "data-i18n": `hints.birth-weight.${this.units['weight']}` }, "\u2BA4 Enter the weight at birth to the nearest pound.")),
                     h("div", { class: "agc-wizard__actions" }, this.mode === 'step' && [
                         h("button", { class: "agc-wizard__actions-prev", "data-i18n": "actions.back", onClick: this.nextPrev.bind(this, -1) }, "\uD83E\uDC14 Back"),
                         h("button", { class: "agc-wizard__actions-next", "data-i18n": "actions.next", onClick: this.nextPrev.bind(this, 1) }, "Next \uD83E\uDC16")
@@ -63,7 +59,7 @@ class AgcAdjustedWeaningWeight {
                         h("label", { "data-i18n": "fields.current-weight" }, "Current Weight"),
                         h("input", { name: "currentWeight", type: "number", required: true, min: "1" }),
                         h("p", { class: "agc-wizard__validation-message", "data-i18n": "validation.current-weight.required", "data-validates": "currentWeight" }, "Please enter a valid weight in whole numbers."),
-                        h("p", { "data-i18n": `hints.current-weight.${this.units['weight']}` }, "\u2BA4 Enter the current weight in pounds.")),
+                        h("p", { "data-i18n": `hints.current-weight.${this.units['weight']}` }, "\u2BA4 Enter the current weight to the nearest pound.")),
                     h("div", { class: "agc-wizard__actions" }, this.mode === 'step' && [
                         h("button", { class: "agc-wizard__actions-prev", "data-i18n": "actions.back", onClick: this.nextPrev.bind(this, -1) }, "\uD83E\uDC14 Back"),
                         h("button", { class: "agc-wizard__actions-next", "data-i18n": "actions.next", onClick: this.nextPrev.bind(this, 1) }, "Next \uD83E\uDC16")
@@ -73,7 +69,7 @@ class AgcAdjustedWeaningWeight {
                         h("label", { "data-i18n": "fields.current-age" }, "Current Age"),
                         h("input", { name: "currentAge", type: "number", required: true, min: "1" }),
                         h("p", { class: "agc-wizard__validation-message", "data-i18n": "validation.current-age.required", "data-validates": "currentAge" }, "Please enter a valid weight in whole numbers."),
-                        h("p", { "data-i18n": `hints.current-age.${this.units['weight']}` }, "\u2BA4 Enter the current age in days.")),
+                        h("p", { "data-i18n": `hints.current-age.${this.units['weight']}` }, "\u2BA4 Enter the age in days when the current weight was taken.")),
                     h("div", { class: "agc-wizard__actions" }, this.mode === 'step' && [
                         h("button", { class: "agc-wizard__actions-prev", "data-i18n": "actions.back", onClick: this.nextPrev.bind(this, -1) }, "\uD83E\uDC14 Back"),
                         h("button", { class: "agc-wizard__actions-next", "data-i18n": "actions.next", onClick: this.nextPrev.bind(this, 1) }, "Next \uD83E\uDC16")
@@ -87,14 +83,15 @@ class AgcAdjustedWeaningWeight {
                             h("option", { value: "4", "data-i18n": "options.age-of-dam.4" }, "4 years old"),
                             h("option", { value: "5", "data-i18n": "options.age-of-dam.5" }, "5 - 10 years old"),
                             h("option", { value: "11", "data-i18n": "options.age-of-dam.11" }, "Over 10 years old")),
-                        h("p", { "data-i18n": "hints.age-of-dam" }, "\u2BA4 Select the age of the dam.")),
+                        h("p", { "data-i18n": "hints.age-of-dam" }, "\u2BA4 Select the closest age of the dam.")),
                     h("div", { class: "agc-wizard__actions" },
                         this.mode === 'step' && h("button", { class: "agc-wizard__actions-back", "data-i18n": "actions.back", onClick: this.nextPrev.bind(this, -1) }, "\uD83E\uDC14 Back"),
-                        h("button", { class: "agc-wizard__actions-next", "data-i18n": "actions.finish", onClick: this.nextPrev.bind(this, this.mode === 'step' ? 1 : 2) }, "Calculate \uD83E\uDC16"))),
+                        h("button", { class: "agc-wizard__actions-next", "data-i18n": "actions.finish", onClick: this.nextPrev.bind(this, this.mode === 'step' ? 1 : 5) }, "Calculate \uD83E\uDC16"))),
                 h("section", { "data-wizard-results": true },
                     h("slot", { name: "results" })))));
     }
     showTab(n) {
+        // This function will display the specified section of the form... 
         if (this.mode === 'step') {
             this.cache['sections'][n].style.display = "block";
         }
@@ -134,15 +131,20 @@ class AgcAdjustedWeaningWeight {
         }
         else if (n == 1 && !this.validateForm())
             return false;
+        // Hide the current tab:
         if (this.mode === 'step') {
             this.cache['sections'][this.currentStep].style.display = "none";
         }
+        // Increase or decrease the current tab by 1:
         this.currentStep = this.currentStep + n;
+        // if you have reached the end of the form...
         if (this.currentStep >= this.cache['sections'].length) {
+            // ... the form gets submitted:
             this.submitted = true;
             this.showResults.call(this);
             return false;
         }
+        // Otherwise, display the correct tab:
         this.showTab.call(this, this.currentStep);
     }
     showResults() {
@@ -153,8 +155,7 @@ class AgcAdjustedWeaningWeight {
             "5": { "male": 0, "female": 0 },
             "11": { "male": 20, "female": 18 }
         };
-        let male = this.form.querySelector('#maleGender').checked;
-        let gender = male ? 'male' : 'female';
+        let gender = this.form.querySelector('[name="gender').value;
         let birthWeight = parseFloat(this.form.querySelector('[name="birthWeight"').value);
         let currentWeight = parseFloat(this.form.querySelector('[name="currentWeight"').value);
         let currentAge = parseInt(this.form.querySelector('[name="currentAge"').value);
@@ -177,7 +178,6 @@ class AgcAdjustedWeaningWeight {
             adjustedWeaningWeight,
             units: this.units
         };
-        console.log('results', results);
         if (this.socket) {
             this.agcCalculated.emit({ socket: this.socket, tract: this.tract, results: Object.assign({}, results) });
         }
@@ -197,7 +197,7 @@ class AgcAdjustedWeaningWeight {
         this.cache = Object.assign({}, this.cache, { sections: sections, results: results });
         window.document.addEventListener('agcAction', this.handleAction.bind(this));
         this.form.querySelector('[name="ageOfDam"]').options[3].defaultSelected = true;
-        this.form.querySelector('#maleGender').defaultChecked = true;
+        this.form.querySelector('[name="gender"]').options[0].defaultSelected = true;
         this.showTab(0);
     }
     componentDidUnload() {
